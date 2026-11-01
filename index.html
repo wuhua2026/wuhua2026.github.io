@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>作品样本 · 空间数据与网站</title>
+<meta name="description" content="两个样本：地理数据坐标纠偏案例、企业官网设计。">
+<style>
+  :root{
+    --ink:#0F1B2D; --ink2:#3A4655; --muted:#78838F; --line:#E5E8EC;
+    --bg:#F7F8FA; --card:#fff; --acc:#1A5FB4; --acc-soft:#EAF1FB;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);color:var(--ink);line-height:1.7;font-size:16px;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB",
+                "Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 22px 72px;}
+
+  header{padding:64px 0 34px;}
+  .tag{
+    display:inline-block;font-size:12px;font-weight:600;letter-spacing:1.4px;
+    color:var(--acc);background:var(--acc-soft);border-radius:99px;padding:5px 13px;margin-bottom:20px;
+  }
+  h1{font-size:clamp(26px,4.4vw,38px);line-height:1.32;letter-spacing:-.6px;font-weight:700;}
+  .lead{margin-top:16px;color:var(--ink2);font-size:15.5px;max-width:36em;line-height:1.85;}
+
+  .list{display:grid;gap:18px;margin-top:44px;}
+  .item{
+    display:grid;grid-template-columns:196px 1fr;gap:26px;align-items:center;
+    background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;
+    transition:border-color .2s, box-shadow .2s, transform .2s;
+  }
+  .item:hover{border-color:#C9D7E7;box-shadow:0 10px 30px rgba(15,27,45,.07);transform:translateY(-2px);}
+  .thumb{
+    height:120px;border-radius:9px;position:relative;overflow:hidden;
+    border:1px solid #EDF0F4;
+  }
+  .thumb.t1{background:linear-gradient(140deg,#F3F7FC,#DDE8F5);}
+  .thumb.t1::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(0deg,rgba(26,95,180,.13) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(26,95,180,.13) 1px,transparent 1px);
+    background-size:26px 26px;
+  }
+  .thumb.t1::after{
+    content:"";position:absolute;left:42%;top:52%;width:8px;height:8px;border-radius:50%;
+    background:#1A5FB4;box-shadow:0 0 0 5px rgba(26,95,180,.16);
+  }
+  .thumb.t2{background:linear-gradient(140deg,#12243A,#1D3B5E);}
+  .thumb.t2::before{
+    content:"";position:absolute;left:18px;top:22px;right:54px;height:7px;border-radius:3px;
+    background:rgba(255,255,255,.82);
+  }
+  .thumb.t2::after{
+    content:"";position:absolute;left:18px;top:40px;width:96px;height:5px;border-radius:3px;
+    background:rgba(255,255,255,.32);box-shadow:0 14px 0 rgba(255,255,255,.18),0 28px 0 rgba(255,255,255,.18);
+  }
+
+  .item h2{font-size:18.5px;letter-spacing:-.2px;margin-bottom:7px;}
+  .item p{font-size:14px;color:var(--ink2);line-height:1.8;}
+  .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px;}
+  .chip{
+    font-size:12px;color:var(--muted);background:#F3F5F8;border:1px solid #E9EDF2;
+    border-radius:5px;padding:2px 9px;
+  }
+  .go{
+    display:inline-flex;align-items:center;gap:6px;margin-top:15px;
+    font-size:14px;font-weight:600;color:var(--acc);
+  }
+  .go::after{content:"→";transition:transform .18s;}
+  .item:hover .go::after{transform:translateX(3px);}
+
+  footer{
+    margin-top:52px;padding-top:22px;border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--muted);line-height:1.9;
+  }
+
+  @media (max-width:680px){
+    .item{grid-template-columns:1fr;gap:16px;}
+    .thumb{height:132px;}
+    header{padding:44px 0 24px;}
+    .list{margin-top:32px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="tag">样 本 展 示</span>
+    <h1>两个样本：把数据修对，把网站做清</h1>
+    <p class="lead">
+      一个展示数据处理的方法与验收标准，一个展示网站的结构与排版能力。
+      两个都是示例项目，用的是公开数据与虚构公司信息，不含任何委托方内容。
+    </p>
+  </header>
+
+  <div class="list">
+
+    <a class="item" href="./case/">
+      <div class="thumb t1"></div>
+      <div>
+        <h2>地理数据坐标纠偏 · 案例</h2>
+        <p>312 条点位整体偏移 462 米，肉眼看不出来。记录从发现问题、反算验证到修正归零的完整过程。</p>
+        <div class="meta">
+          <span class="chip">坐标系</span>
+          <span class="chip">批量处理</span>
+          <span class="chip">300dpi 出图</span>
+        </div>
+        <span class="go">看案例</span>
+      </div>
+    </a>
+
+    <a class="item" href="./site/">
+      <div class="thumb t2"></div>
+      <div>
+        <h2>企业官网 · 设计样本</h2>
+        <p>面向 B2B 服务的官网：服务拆解、案例量化、流程透明，以及一页「我们不做什么」。</p>
+        <div class="meta">
+          <span class="chip">响应式</span>
+          <span class="chip">纯静态</span>
+          <span class="chip">手机优先</span>
+        </div>
+        <span class="go">打开站点</span>
+      </div>
+    </a>
+
+  </div>
+
+  <footer>
+    两个样本均为个人项目：数据来自公开数据集，公司信息为虚构示例。<br>
+    页面不含任何联系方式，如需沟通请通过原始渠道联系。
+  </footer>
+
+</div>
+</body>
+</html>

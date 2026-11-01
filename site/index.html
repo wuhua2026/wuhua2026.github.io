@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>秦衡空间 · 空间数据与成果整理服务（示例站点）</title>
+<meta name="description" content="面向国土、规划、生态与工程领域，提供空间数据处理、成果整理与可视化交付。">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  :root{
+    --ink:#0F1B2D; --ink2:#33404F; --muted:#6B7684; --line:#E5E8EC;
+    --bg:#FFFFFF; --soft:#F5F7FA; --acc:#1A5FB4; --acc-soft:#EAF1FB;
+    --max:1120px; --r:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+  body{
+    background:var(--bg);color:var(--ink);line-height:1.7;font-size:16px;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB",
+                "Microsoft YaHei",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;}
+
+  /* ── 顶栏 ─────────────────────────── */
+  header{
+    position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);
+    backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;height:64px;gap:32px;}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17px;letter-spacing:.5px;}
+  .logo i{
+    width:22px;height:22px;border-radius:6px;flex:none;
+    background:linear-gradient(135deg,var(--acc),#2E86C8);
+    display:block;position:relative;
+  }
+  .logo i::after{
+    content:"";position:absolute;inset:6px;border:2px solid #fff;border-radius:2px;
+    border-right-color:transparent;border-bottom-color:transparent;
+  }
+  .nav ul{display:flex;gap:26px;list-style:none;margin-left:auto;}
+  .nav a{font-size:14.5px;color:var(--ink2);transition:color .18s;}
+  .nav a:hover{color:var(--acc);}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:6px;
+    height:40px;padding:0 20px;border-radius:8px;font-size:14.5px;font-weight:600;
+    transition:transform .15s, background .18s, box-shadow .18s;white-space:nowrap;
+  }
+  .btn-p{background:var(--acc);color:#fff;box-shadow:0 2px 10px rgba(26,95,180,.22);}
+  .btn-p:hover{background:#154F98;transform:translateY(-1px);}
+  .btn-g{border:1px solid var(--line);color:var(--ink2);background:#fff;}
+  .btn-g:hover{border-color:var(--acc);color:var(--acc);}
+  .burger{display:none;margin-left:auto;width:40px;height:40px;border:1px solid var(--line);
+    border-radius:8px;background:#fff;cursor:pointer;align-items:center;justify-content:center;}
+  .burger span{display:block;width:16px;height:1.6px;background:var(--ink);position:relative;}
+  .burger span::before,.burger span::after{
+    content:"";position:absolute;left:0;width:16px;height:1.6px;background:var(--ink);
+  }
+  .burger span::before{top:-5px;} .burger span::after{top:5px;}
+
+  /* ── Hero ─────────────────────────── */
+  .hero{padding:88px 0 0;background:
+      radial-gradient(900px 420px at 78% -12%, #EAF1FB 0%, transparent 62%),
+      linear-gradient(180deg,#FFFFFF,#FBFCFE);}
+  .tag{
+    display:inline-block;font-size:12.5px;font-weight:600;letter-spacing:1.2px;
+    color:var(--acc);background:var(--acc-soft);border-radius:99px;padding:5px 14px;
+    margin-bottom:22px;
+  }
+  h1{
+    font-size:clamp(30px,4.6vw,52px);line-height:1.28;letter-spacing:-.8px;font-weight:700;
+    max-width:15em;
+  }
+  h1 em{font-style:normal;color:var(--acc);}
+  .lead{
+    margin-top:22px;font-size:clamp(15px,1.6vw,18px);color:var(--ink2);
+    max-width:38em;line-height:1.85;
+  }
+  .hero-cta{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap;}
+
+  /* 数字条 */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+    margin-top:60px;transform:translateY(1px);
+  }
+  .stat{background:#fff;padding:24px 22px;}
+  .stat b{display:block;font-size:30px;font-weight:700;letter-spacing:-.5px;line-height:1.2;}
+  .stat b i{font-style:normal;font-size:15px;font-weight:600;color:var(--muted);margin-left:3px;}
+  .stat span{display:block;font-size:13px;color:var(--muted);margin-top:6px;}
+
+  /* ── 通用区块 ─────────────────────── */
+  section{padding:88px 0;}
+  .sec-head{margin-bottom:44px;}
+  .kicker{
+    font-size:12.5px;font-weight:700;letter-spacing:2px;color:var(--acc);
+    text-transform:uppercase;margin-bottom:12px;
+  }
+  h2{font-size:clamp(23px,2.9vw,32px);letter-spacing:-.4px;line-height:1.35;}
+  .sec-sub{margin-top:12px;color:var(--muted);font-size:15px;max-width:34em;}
+
+  /* ── 服务 ─────────────────────────── */
+  .grid4{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  .card{
+    border:1px solid var(--line);border-radius:var(--r);padding:28px 26px;background:#fff;
+    transition:border-color .2s, box-shadow .2s, transform .2s;
+  }
+  .card:hover{border-color:#CBD8E8;box-shadow:0 8px 26px rgba(15,27,45,.06);transform:translateY(-2px);}
+  .ico{
+    width:40px;height:40px;border-radius:9px;background:var(--acc-soft);
+    display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+  }
+  .ico svg{width:20px;height:20px;stroke:var(--acc);fill:none;stroke-width:1.7;
+    stroke-linecap:round;stroke-linejoin:round;}
+  .card h3{font-size:17px;margin-bottom:8px;}
+  .card p{font-size:14px;color:var(--ink2);line-height:1.8;}
+  .card ul{margin-top:12px;list-style:none;font-size:13.5px;color:var(--muted);}
+  .card ul li{position:relative;padding-left:14px;line-height:1.9;}
+  .card ul li::before{content:"";position:absolute;left:0;top:11px;width:5px;height:5px;
+    border-radius:50%;background:#B9C6D6;}
+
+  /* ── 案例 ─────────────────────────── */
+  .cases{background:var(--soft);}
+  .case-list{display:grid;gap:16px;}
+  .case{
+    display:grid;grid-template-columns:200px 1fr;gap:26px;align-items:center;
+    background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px;
+    transition:border-color .2s, box-shadow .2s;
+  }
+  .case:hover{border-color:#CBD8E8;box-shadow:0 6px 22px rgba(15,27,45,.05);}
+  .thumb{
+    height:104px;border-radius:8px;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,#E8EFF8,#D3E0EF);
+  }
+  .thumb::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(0deg, rgba(26,95,180,.16) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,95,180,.16) 1px, transparent 1px);
+    background-size:22px 22px;
+  }
+  .thumb::after{
+    content:"";position:absolute;left:50%;top:50%;width:9px;height:9px;border-radius:50%;
+    background:var(--acc);transform:translate(-50%,-50%);
+    box-shadow:0 0 0 6px rgba(26,95,180,.18), 0 0 0 14px rgba(26,95,180,.09);
+  }
+  .case h4{font-size:16.5px;margin-bottom:6px;}
+  .case p{font-size:14px;color:var(--ink2);}
+  .case .kv{display:flex;gap:22px;margin-top:12px;flex-wrap:wrap;}
+  .case .kv div{font-size:12.5px;color:var(--muted);}
+  .case .kv b{display:block;font-size:16px;color:var(--ink);font-weight:700;letter-spacing:-.2px;}
+
+  /* ── 流程 ─────────────────────────── */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
+  .steps::before{
+    content:"";position:absolute;left:0;right:0;top:19px;height:1px;background:var(--line);
+  }
+  .step{padding-right:20px;position:relative;}
+  .step .no{
+    width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;
+    color:var(--acc);position:relative;z-index:1;margin-bottom:18px;
+  }
+  .step h4{font-size:15.5px;margin-bottom:6px;}
+  .step p{font-size:13.5px;color:var(--muted);line-height:1.85;}
+
+  /* ── 关于 / 不做 ──────────────────── */
+  .two{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:start;}
+  .about-p{font-size:15px;color:var(--ink2);line-height:1.95;}
+  .about-p + .about-p{margin-top:14px;}
+  .no-list{border-left:2px solid #E7DCD2;padding-left:22px;}
+  .no-list h4{font-size:13px;letter-spacing:1.4px;color:#A8703C;margin-bottom:14px;}
+  .no-list li{list-style:none;font-size:14px;color:var(--ink2);padding:7px 0;line-height:1.75;}
+  .no-list li b{color:var(--ink);}
+
+  /* ── 联系 ─────────────────────────── */
+  .cta{background:var(--ink);color:#fff;}
+  .cta h2{color:#fff;}
+  .cta .sec-sub{color:#9FAEC0;}
+  .form{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:36px;max-width:720px;}
+  .form .full{grid-column:1 / -1;}
+  .fld label{display:block;font-size:12.5px;color:#9FAEC0;margin-bottom:7px;}
+  .fld input,.fld select,.fld textarea{
+    width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);
+    border-radius:8px;padding:11px 13px;color:#fff;font:inherit;font-size:14px;
+    transition:border-color .18s, background .18s;
+  }
+  .fld input:focus,.fld select:focus,.fld textarea:focus{
+    outline:none;border-color:#5A9BE0;background:rgba(255,255,255,.09);
+  }
+  .fld textarea{resize:vertical;min-height:88px;}
+  .fld select option{color:#0F1B2D;}
+  .form .note{grid-column:1 / -1;font-size:12px;color:#7E8FA4;margin-top:2px;}
+  .form button{grid-column:1 / -1;justify-self:start;margin-top:8px;}
+
+  /* ── 页脚 ─────────────────────────── */
+  footer{background:#0B1420;color:#7E8FA4;padding:34px 0 40px;font-size:13px;}
+  .foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center;}
+  .foot .demo{
+    font-size:12px;color:#6C7C8F;background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.09);border-radius:6px;padding:6px 12px;
+  }
+
+  /* ── 渐显（仅在 JS 可用时隐藏，避免脚本失效导致整页空白）── */
+  html.js .rv{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease;}
+  html.js .rv.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){
+    html.js .rv{opacity:1;transform:none;transition:none;}
+  }
+
+  /* ── 响应式 ───────────────────────── */
+  @media (max-width:880px){
+    .nav ul{display:none;}
+    .nav .btn-p{display:none;}
+    .burger{display:flex;}
+    .nav ul.open{
+      display:flex;flex-direction:column;gap:0;position:absolute;left:0;right:0;top:64px;
+      background:#fff;border-bottom:1px solid var(--line);padding:8px 24px 16px;
+    }
+    .nav ul.open li{padding:11px 0;border-bottom:1px solid #F0F2F5;}
+    .stats{grid-template-columns:repeat(2,1fr);margin-top:44px;}
+    .grid4{grid-template-columns:1fr;}
+    .case{grid-template-columns:1fr;gap:16px;}
+    .thumb{height:120px;}
+    .steps{grid-template-columns:1fr;gap:26px;}
+    .steps::before{left:19px;right:auto;top:0;bottom:0;width:1px;height:auto;}
+    .step{padding-right:0;padding-left:58px;}
+    .step .no{position:absolute;left:0;top:0;margin-bottom:0;}
+    .two{grid-template-columns:1fr;gap:36px;}
+    .form{grid-template-columns:1fr;}
+    section{padding:64px 0;}
+    .hero{padding-top:64px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo"><i></i>秦衡空间</a>
+    <button class="burger" id="burger" aria-label="菜单"><span></span></button>
+    <ul id="menu">
+      <li><a href="#services">服务</a></li>
+      <li><a href="#cases">案例</a></li>
+      <li><a href="#flow">流程</a></li>
+      <li><a href="#about">关于</a></li>
+      <li><a href="#contact">联系</a></li>
+    </ul>
+    <a href="#contact" class="btn btn-p">聊一个需求</a>
+  </div>
+</header>
+
+<!-- ── Hero ───────────────────────────── -->
+<div class="hero">
+  <div class="wrap">
+    <span class="tag">空 间 数 据 服 务</span>
+    <h1>把空间数据，<br>变成<em>能交出去</em>的东西</h1>
+    <p class="lead">
+      面向国土、规划、生态与工程领域，做三件事：把数据洗干净、把成果整理规范、把结果做成看得懂的图。
+      不卖平台，不卖设备，只交付你可以直接用、直接报出去的成果。
+    </p>
+    <div class="hero-cta">
+      <a href="#services" class="btn btn-p">看看我们做什么</a>
+      <a href="#cases" class="btn btn-g">看三个真实项目</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>12<i>年</i></b><span>行业交付经验</span></div>
+      <div class="stat"><b>300<i>+</i></b><span>累计交付项目</span></div>
+      <div class="stat"><b>8<i>个</i></b><span>省级单位合作</span></div>
+      <div class="stat"><b>4<i>类</i></b><span>可承接成果类型</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 服务 ───────────────────────────── -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kicker">Services</div>
+      <h2>四类活，一条标准：交出去能用</h2>
+      <p class="sec-sub">不讲方法论，只给结果。每一项都写明输入、输出和多久能交。</p>
+    </div>
+
+    <div class="grid4">
+      <article class="card rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 7l6-3 6 3 6-3v13l-6 3-6-3-6 3z"/><path d="M9 4v13M15 7v13"/></svg></div>
+        <h3>空间数据处理</h3>
+        <p>坐标系乱、格式不兼容、拓扑一堆错误——这类问题不该占用你的人力。</p>
+        <ul>
+          <li>坐标系转换与纠偏（WGS84 / CGCS2000 / 地方坐标）</li>
+          <li>Shp / GeoJSON / KML / DWG / Excel 互转</li>
+          <li>批量裁剪、合并、属性整理、拓扑检查</li>
+        </ul>
+      </article>
+
+      <article class="card rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 9v11"/></svg></div>
+        <h3>国土与规划成果整理</h3>
+        <p>报批成果过不了、图属对不上、面积汇总有差——按规范重做一遍。</p>
+        <ul>
+          <li>报批成果套合与格式规范化</li>
+          <li>图属一致性核查、面积汇总核对</li>
+          <li>成果目录与说明文档编制</li>
+        </ul>
+      </article>
+
+      <article class="card rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 7.5-8 8-4.5-.5-8-3-8-8V7z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>生态与资源核查</h3>
+        <p>红线压占、地类变化、图斑核查，需要的是能写进报告的证据链。</p>
+        <ul>
+          <li>生态保护红线压占比对</li>
+          <li>多年土地利用变化检测</li>
+          <li>核查图件、统计表与说明</li>
+        </ul>
+      </article>
+
+      <article class="card rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 17l6-9 4 5 3-4 5 8z"/><circle cx="7" cy="6" r="2"/></svg></div>
+        <h3>三维与可视化</h3>
+        <p>数据做完了要给人看：汇报、评审、招商，图得能讲清一件事。</p>
+        <ul>
+          <li>实景模型轻量化与格式转换</li>
+          <li>Web 地图与交互页面发布</li>
+          <li>汇报用专题图与大屏</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── 案例 ───────────────────────────── -->
+<section id="cases" class="cases">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kicker">Cases</div>
+      <h2>三个项目，看数据量和你像不像</h2>
+      <p class="sec-sub">以下为脱敏描述，不含委托方名称与具体范围数据。</p>
+    </div>
+
+    <div class="case-list">
+      <article class="case rv">
+        <div class="thumb"></div>
+        <div>
+          <h4>某市国土空间规划 · 基础数据整合</h4>
+          <p>六套坐标系、三个来源的数据合并成一套底图，图属对不上的一律回溯原始档案核对，不做"技术性抹平"。</p>
+          <div class="kv">
+            <div><b>42 万</b>要素条数</div>
+            <div><b>6 套</b>坐标系统一</div>
+            <div><b>5 周</b>交付周期</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case rv">
+        <div class="thumb"></div>
+        <div>
+          <h4>某流域 · 生态保护红线压占核查</h4>
+          <p>13 类地类与红线图层逐类叠加，输出压占图斑清单、面积统计与位置图，可直接附进核查报告。</p>
+          <div class="kv">
+            <div><b>1,860 km²</b>核查范围</div>
+            <div><b>13 类</b>地类比对</div>
+            <div><b>218 处</b>压占图斑</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case rv">
+        <div class="thumb"></div>
+        <div>
+          <h4>某产业园区 · 三维实景成果交付</h4>
+          <p>原始模型在浏览器里打不开，做轻量化与格式转换后，能在普通笔记本上流畅浏览。</p>
+          <div class="kv">
+            <div><b>2.4 km²</b>建模范围</div>
+            <div><b>78%</b>体积压缩</div>
+            <div><b>3 天</b>交付周期</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── 流程 ───────────────────────────── -->
+<section id="flow">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kicker">Process</div>
+      <h2>四步，第二次沟通就能给准价</h2>
+      <p class="sec-sub">不先收费、不先画饼。先看数据，再报确定价格。</p>
+    </div>
+
+    <div class="steps">
+      <div class="step rv">
+        <div class="no">01</div>
+        <h4>需求确认</h4>
+        <p>你说清要什么结果、什么时候要；我给一份清单：做什么、不做什么、交几样东西。</p>
+      </div>
+      <div class="step rv">
+        <div class="no">02</div>
+        <h4>数据评估</h4>
+        <p>看一遍原始数据，指出缺什么、脏在哪、哪部分需要你补材料，并给出确定报价。</p>
+      </div>
+      <div class="step rv">
+        <div class="no">03</div>
+        <h4>分批交付</h4>
+        <p>先交一小批给你验证格式与口径，确认无误后再跑全量，避免整批返工。</p>
+      </div>
+      <div class="step rv">
+        <div class="no">04</div>
+        <h4>验收与移交</h4>
+        <p>三项自检（坐标、条数、抽查）通过后交付，附方法说明；原始数据按要求删除。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 关于 ───────────────────────────── -->
+<section id="about" style="background:var(--soft);">
+  <div class="wrap two">
+    <div class="rv">
+      <div class="kicker">About</div>
+      <h2 style="margin-bottom:24px;">我们做的是一件无聊但重要的事</h2>
+      <p class="about-p">
+        空间数据出问题，往往不报错。图能画出来、表能导出，但位置整体偏了几百米，
+        或者图斑和属性对不上——等到报批被打回、评审被指出，返工成本已经是几倍。
+      </p>
+      <p class="about-p">
+        所以我们把力气花在交付前的核对上：坐标抽已知地标比对、条数逐项对账、结果随机抽查。
+        这些动作不产生额外价值，但能挡住那类"看起来没问题"的错误。
+      </p>
+      <p class="about-p">
+        团队 12 人，核心成员来自规划与测绘一线。我们更擅长处理"历史遗留、来源不明、
+        标准不统一"的数据，而不是从零建一个新系统。
+      </p>
+    </div>
+
+    <div class="rv">
+      <div class="no-list">
+        <h4>我 们 不 做</h4>
+        <ul>
+          <li><b>不做对外公开发布的地图服务</b><br>涉审图号与测绘资质，我们只交付客户内部使用与报告附件类成果。</li>
+          <li><b>不接涉密数据</b><br>无法保证密级管理条件，这类项目建议走有资质的单位。</li>
+          <li><b>不承接论文与毕业设计类项目</b><br>可提供数据处理、专题制图与软件操作培训。</li>
+          <li><b>不做代运营与长期托管</b><br>交付即结束，系统上线后由客户自有团队运维。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 联系 ───────────────────────────── -->
+<section id="contact" class="cta">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kicker" style="color:#5A9BE0;">Contact</div>
+      <h2>先发一小份数据，我们告诉你能不能做</h2>
+      <p class="sec-sub">不用先付钱。把表头和前几行发来（可打码），24 小时内给判断与报价。</p>
+    </div>
+
+    <form class="form rv" onsubmit="return false;">
+      <div class="fld">
+        <label>称呼</label>
+        <input type="text" placeholder="怎么称呼您">
+      </div>
+      <div class="fld">
+        <label>单位 / 项目</label>
+        <input type="text" placeholder="单位名称或项目简称">
+      </div>
+      <div class="fld">
+        <label>需求类型</label>
+        <select>
+          <option>空间数据处理</option>
+          <option>国土与规划成果整理</option>
+          <option>生态与资源核查</option>
+          <option>三维与可视化</option>
+          <option>还不确定，先咨询</option>
+        </select>
+      </div>
+      <div class="fld">
+        <label>期望交付时间</label>
+        <input type="text" placeholder="如：两周内 / 本月底">
+      </div>
+      <div class="fld full">
+        <label>简单说明</label>
+        <textarea placeholder="数据是什么格式、大概多少个要素、要什么结果"></textarea>
+      </div>
+      <p class="note">本表单为示例，未接入后端；实际项目会提交至您的企业邮箱或内部工单系统。</p>
+      <button type="button" class="btn btn-p">提交需求（示例）</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>秦衡空间 · 空间数据与成果整理服务</div>
+    <div class="demo">示例站点｜公司信息为虚构，仅用于能力展示</div>
+  </div>
+</footer>
+
+<script>
+  // 手机菜单
+  document.getElementById('burger').addEventListener('click', function () {
+    document.getElementById('menu').classList.toggle('open');
+  });
+  // 点击导航后收起
+  document.querySelectorAll('#menu a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      document.getElementById('menu').classList.remove('open');
+    });
+  });
+  // 滚动渐显
+  var els = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  } else {
+    els.forEach(function (el) { el.classList.add('in'); });
+  }
+</script>
+</body>
+</html>
